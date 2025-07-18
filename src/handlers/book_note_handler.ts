@@ -15,6 +15,7 @@ import { replaceVariableSyntax, makeFileName, applyDefaultFrontMatter, toStringF
 
 export class BookNote {
 
+  
   async createNote(): Promise<void> {
     try {
       const book = await this.searchBookMetadata();

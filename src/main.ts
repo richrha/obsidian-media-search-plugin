@@ -14,7 +14,7 @@ export default class BookSearchPlugin extends Plugin {
     await this.loadSettings();
 
     // This creates an icon in the left ribbon.
-    const ribbonIconEl = this.addRibbonIcon('book', 'Create new book note', () => this.createNewBookNote());
+    const ribbonIconEl = this.addRibbonIcon('book-alert', 'Create new book note', () => this.createNewBookNote());
     // Perform additional things with the ribbon
     ribbonIconEl.addClass('obsidian-book-search-plugin-ribbon-class');
 

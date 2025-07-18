@@ -18,7 +18,8 @@
       "@utils/*": ["src/utils/*"],
       "@apis/*": ["src/apis/*"],
       "@views/*": ["src/views/*"],
-      "@src/*": ["src/*"]
+      "@src/*": ["src/*"],
+      "@handlers/*": ["src/handlers/*"]
     }
   },
   "include": ["**/*.ts"]
