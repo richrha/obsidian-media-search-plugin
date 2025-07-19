@@ -1,4 +1,4 @@
-import { Plugin, Notice, TFile, requestUrl } from 'obsidian';
+import { Notice, TFile, requestUrl } from 'obsidian';
 import { BookSearchModal } from '@views/book_search_modal';
 import { BookSuggestModal } from '@views/book_suggest_modal';
 import { Book } from '@models/book.model';
@@ -10,13 +10,13 @@ import {
 } from '@utils/template';
 import { replaceVariableSyntax, makeFileName, applyDefaultFrontMatter, toStringFrontMatter } from '@utils/utils';
 import { CursorJumper } from '@utils/cursor_jumper';
-
+import type { BookSearchPlugin } from '@src/main';
 
 
 export class BookNote {
-  private plugin: Plugin;
+  private plugin: BookSearchPlugin;
 
-  constructor (thisplugin: Plugin){
+  constructor (thisplugin: BookSearchPlugin){
     this.plugin = thisplugin;
   }
   
