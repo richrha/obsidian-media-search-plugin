@@ -10,7 +10,7 @@ import {
 } from '@utils/template';
 import { replaceVariableSyntax, makeFileName, applyDefaultFrontMatter, toStringFrontMatter } from '@utils/utils';
 import { CursorJumper } from '@utils/cursor_jumper';
-import type { BookSearchPlugin } from '@src/main';
+import type BookSearchPlugin from '@src/main';
 
 
 export class BookNote {
@@ -56,7 +56,7 @@ export class BookNote {
   
   async openBookSuggestModal(books: Book[]): Promise<Book> {
     return new Promise((resolve, reject) => {
-      return new BookSuggestModal(this.app, this.plugin.settings.showCoverImageInSearch, books, (error, selectedBook) => {
+      return new BookSuggestModal(this.plugin.app, this.plugin.settings.showCoverImageInSearch, books, (error, selectedBook) => {
         return error ? reject(error) : resolve(selectedBook);
       }).open();
     });
@@ -143,7 +143,7 @@ export class BookNote {
 
       const imageData = response.arrayBuffer;
       const filePath = `${directory}/${imageName}`;
-      await this.app.vault.adapter.writeBinary(filePath, imageData);
+      await this.plugin.app.vault.adapter.writeBinary(filePath, imageData);
       return filePath;
     } catch (error) {
       console.error('Error downloading or saving image:', error);
