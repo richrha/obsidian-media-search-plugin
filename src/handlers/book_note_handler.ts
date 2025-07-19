@@ -15,11 +15,13 @@ import { replaceVariableSyntax, makeFileName, applyDefaultFrontMatter, toStringF
 
 export class BookNote {
   settings: BookSearchPluginSettings;
-  app: plugin.app
-  
-  constructor (settings, app){
+  app: plugin.app;
+  bookplugin: any;
+
+  constructor (settings, app, thisplugin){
     this.settings = settings;
     this.app = app;
+    this.bookplugin =thisplugin;
   }
   
   async createNote(): Promise<void> {
@@ -50,7 +52,7 @@ export class BookNote {
   
   async openBookSearchModal(query = ''): Promise<Book[]> {
     return new Promise((resolve, reject) => {
-      return new BookSearchModal(this, query, (error, results) => {
+      return new BookSearchModal(this.bookplugin, query, (error, results) => {
         return error ? reject(error) : resolve(results);
       }).open();
     });
