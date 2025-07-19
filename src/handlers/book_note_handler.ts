@@ -15,7 +15,7 @@ import { replaceVariableSyntax, makeFileName, applyDefaultFrontMatter, toStringF
 
 export class BookNote {
   settings: BookSearchPluginSettings;
-  app: Plugin.app
+  app: plugin.app
   
   constructor (settings, app){
     this.settings = settings;
