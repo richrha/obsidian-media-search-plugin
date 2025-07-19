@@ -2,7 +2,6 @@ import { Plugin, Notice, TFile, requestUrl } from 'obsidian';
 import { BookSearchModal } from '@views/book_search_modal';
 import { BookSuggestModal } from '@views/book_suggest_modal';
 import { Book } from '@models/book.model';
-import { BookSearchPluginSettings } from '@settings/settings';
 import {
   getTemplateContents,
   applyTemplateTransformations,
@@ -11,7 +10,6 @@ import {
 } from '@utils/template';
 import { replaceVariableSyntax, makeFileName, applyDefaultFrontMatter, toStringFrontMatter } from '@utils/utils';
 import { CursorJumper } from '@utils/cursor_jumper';
-import { BookSearchPlugin } from '@src/main';
 
 
 
