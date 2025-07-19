@@ -1,9 +1,5 @@
-import { MarkdownView, Notice, Plugin, TFile, requestUrl } from 'obsidian';
+import { Plugin} from 'obsidian';
 
-import { BookSearchModal } from '@views/book_search_modal';
-import { BookSuggestModal } from '@views/book_suggest_modal';
-import { CursorJumper } from '@utils/cursor_jumper';
-import { Book } from '@models/book.model';
 import { BookSearchSettingTab, BookSearchPluginSettings, DEFAULT_SETTINGS } from '@settings/settings';
 import { BookNote } from '@handlers/book_note_handler';
 

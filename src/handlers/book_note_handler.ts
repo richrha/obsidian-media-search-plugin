@@ -1,8 +1,8 @@
-import { MarkdownView, Notice, Plugin, TFile, requestUrl } from 'obsidian';
+import { Notice, TFile, requestUrl } from 'obsidian';
 import { BookSearchModal } from '@views/book_search_modal';
 import { BookSuggestModal } from '@views/book_suggest_modal';
 import { Book } from '@models/book.model';
-import { BookSearchSettingTab, BookSearchPluginSettings, DEFAULT_SETTINGS } from '@settings/settings';
+import { BookSearchPluginSettings } from '@settings/settings';
 import {
   getTemplateContents,
   applyTemplateTransformations,
@@ -15,8 +15,8 @@ import { CursorJumper } from '@utils/cursor_jumper';
 
 export class BookNote {
   settings: BookSearchPluginSettings;
-  app: any;
-  bookplugin: any;
+  app: unknown;
+  bookplugin: unknown;
 
   constructor (settings, app, thisplugin){
     this.settings = settings;
