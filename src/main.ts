@@ -36,7 +36,7 @@ export default class BookSearchPlugin extends Plugin {
   }
 
   async createNewBookNote() {
-    const selectedMediaNote = new BookNote(this.settings, this.app, this);
+    const selectedMediaNote = new BookNote(this);
     selectedMediaNote.createNote();
   }
 }

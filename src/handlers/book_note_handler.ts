@@ -1,4 +1,4 @@
-import { Notice, TFile, requestUrl } from 'obsidian';
+import { Plugin, Notice, TFile, requestUrl } from 'obsidian';
 import { BookSearchModal } from '@views/book_search_modal';
 import { BookSuggestModal } from '@views/book_suggest_modal';
 import { Book } from '@models/book.model';
@@ -16,13 +16,9 @@ import { BookSearchPlugin } from '@src/main';
 
 
 export class BookNote {
-  private settings: BookSearchPluginSettings;
-  private app: App;
-  private plugin: BookSearchPlugin;
+  private plugin: Plugin;
 
-  constructor (thisplugin){
-    this.settings = thisplugin.settings;
-    this.app = thisplugin.app;
+  constructor (thisplugin: Plugin){
     this.plugin = thisplugin;
   }
   
@@ -33,12 +29,12 @@ export class BookNote {
   
       // TODO: If the same file exists, it asks if you want to overwrite it.
       // create new File
-      const fileName = makeFileName(book, this.settings.fileNameFormat);
-      const filePath = `${this.settings.folder}/${fileName}`;
-      const targetFile = await this.app.vault.create(filePath, renderedContents);
+      const fileName = makeFileName(book, this.plugin.settings.fileNameFormat);
+      const filePath = `${this.plugin.settings.folder}/${fileName}`;
+      const targetFile = await this.plugin.app.vault.create(filePath, renderedContents);
   
       // if use Templater plugin
-      await useTemplaterPluginInFile(this.app, targetFile);
+      await useTemplaterPluginInFile(this.plugin.app, targetFile);
       this.openNewBookNote(targetFile);
     } catch (err) {
         console.warn(err);
@@ -62,7 +58,7 @@ export class BookNote {
   
   async openBookSuggestModal(books: Book[]): Promise<Book> {
     return new Promise((resolve, reject) => {
-      return new BookSuggestModal(this.app, this.settings.showCoverImageInSearch, books, (error, selectedBook) => {
+      return new BookSuggestModal(this.app, this.plugin.settings.showCoverImageInSearch, books, (error, selectedBook) => {
         return error ? reject(error) : resolve(selectedBook);
       }).open();
     });
@@ -77,20 +73,20 @@ export class BookNote {
       coverImagePath,
       frontmatter, // @deprecated
       content, // @deprecated
-    } = this.settings;
+    } = this.plugin.settings;
   
     let contentBody = '';
   
     if (enableCoverImageSave) {
       const coverImageUrl = book.coverLargeUrl || book.coverMediumUrl || book.coverSmallUrl || book.coverUrl;
       if (coverImageUrl) {
-        const imageName = makeFileName(book, this.settings.fileNameFormat, 'jpg');
+        const imageName = makeFileName(book, this.plugin.settings.fileNameFormat, 'jpg');
         book.localCoverImage = await this.downloadAndSaveImage(imageName, coverImagePath, coverImageUrl);
       }
     }
   
     if (templateFile) {
-      const templateContents = await getTemplateContents(this.app, templateFile);
+      const templateContents = await getTemplateContents(this.plugin.app, templateFile);
       const replacedVariable = replaceVariableSyntax(book, applyTemplateTransformations(templateContents));
       contentBody += executeInlineScriptsTemplates(book, replacedVariable);
     } else {
@@ -111,10 +107,10 @@ export class BookNote {
   
   
   async openNewBookNote(targetFile: TFile) {
-    if (!this.settings.openPageOnCompletion) return;
+    if (!this.plugin.settings.openPageOnCompletion) return;
 
     // open file
-    const activeLeaf = this.app.workspace.getLeaf();
+    const activeLeaf = this.plugin.app.workspace.getLeaf();
     if (!activeLeaf) {
       console.warn('No active leaf');
       return;
@@ -123,11 +119,11 @@ export class BookNote {
     await activeLeaf.openFile(targetFile, { state: { mode: 'source' } });
     activeLeaf.setEphemeralState({ rename: 'all' });
     // cursor focus
-    await new CursorJumper(this.app).jumpToNextCursorLocation();
+    await new CursorJumper(this.plugin.app).jumpToNextCursorLocation();
   }
 
   async downloadAndSaveImage(imageName: string, directory: string, imageUrl: string): Promise<string> {
-    const { enableCoverImageSave } = this.settings;
+    const { enableCoverImageSave } = this.plugin.settings;
     if (!enableCoverImageSave) {
       console.warn('Cover image saving is not enabled.');
       return '';
