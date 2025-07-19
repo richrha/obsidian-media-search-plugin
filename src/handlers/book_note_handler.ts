@@ -14,7 +14,13 @@ import { replaceVariableSyntax, makeFileName, applyDefaultFrontMatter, toStringF
 
 
 export class BookNote {
-
+  settings: BookSearchPluginSettings;
+  app: Plugin.app
+  
+  constructor (settings, app){
+    this.settings = settings;
+    this.app = app;
+  }
   
   async createNote(): Promise<void> {
     try {
