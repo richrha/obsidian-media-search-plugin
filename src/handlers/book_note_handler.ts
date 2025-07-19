@@ -11,7 +11,7 @@ import {
 } from '@utils/template';
 import { replaceVariableSyntax, makeFileName, applyDefaultFrontMatter, toStringFrontMatter } from '@utils/utils';
 import { CursorJumper } from '@utils/cursor_jumper';
-import { BookSearchPlugin } from '@main';
+import { BookSearchPlugin } from '@src/main';
 
 
 
