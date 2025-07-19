@@ -11,17 +11,19 @@ import {
 } from '@utils/template';
 import { replaceVariableSyntax, makeFileName, applyDefaultFrontMatter, toStringFrontMatter } from '@utils/utils';
 import { CursorJumper } from '@utils/cursor_jumper';
+import { BookSearchPlugin } from '@main';
+
 
 
 export class BookNote {
-  settings: BookSearchPluginSettings;
-  app: unknown;
-  bookplugin: unknown;
+  private settings: BookSearchPluginSettings;
+  private app: App;
+  private plugin: BookSearchPlugin;
 
-  constructor (settings, app, thisplugin){
-    this.settings = settings;
-    this.app = app;
-    this.bookplugin =thisplugin;
+  constructor (thisplugin){
+    this.settings = thisplugin.settings;
+    this.app = thisplugin.app;
+    this.plugin = thisplugin;
   }
   
   async createNote(): Promise<void> {
@@ -52,7 +54,7 @@ export class BookNote {
   
   async openBookSearchModal(query = ''): Promise<Book[]> {
     return new Promise((resolve, reject) => {
-      return new BookSearchModal(this.bookplugin, query, (error, results) => {
+      return new BookSearchModal(this.plugin, query, (error, results) => {
         return error ? reject(error) : resolve(results);
       }).open();
     });
