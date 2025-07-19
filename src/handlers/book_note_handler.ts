@@ -10,7 +10,7 @@ import {
   executeInlineScriptsTemplates,
 } from '@utils/template';
 import { replaceVariableSyntax, makeFileName, applyDefaultFrontMatter, toStringFrontMatter } from '@utils/utils';
-
+import { CursorJumper } from '@utils/cursor_jumper';
 
 
 export class BookNote {
